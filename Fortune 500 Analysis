@@ -61,7 +61,6 @@ VALUES
 # Analysis:
 
 # Categorize the companies by company size using the number of employees.
-
 SELECT industry, company_name, employees,
 CASE WHEN employees >=100000
 THEN "Large_Company"
@@ -70,6 +69,26 @@ THEN "Medium_Company"
 END AS "Company_Size"
 FROM fortune_companies
 WHERE employees
-ORDER BY Company_Size asc;
+ORDER BY Company_Size asc
+;
 
+# Which industries had a revenue of more than $270 billion, and what was the average amount?
+SELECT industry, ROUND(AVG(revenue),1) as avg_revenue
+FROM fortune_companies
+GROUP BY industry
+HAVING avg_revenue>=270
+;
 
+# Which companies have more than 200,000 employees AND have more than 8 maternity leave weeks?
+SELECT *
+FROM fortune_companies
+WHERE employees>=200000
+AND maternity_leave_weeks>=8
+ORDER BY maternity_leave_weeks desc
+;
+
+# What is the average paid time off days in the healthcare industry?
+SELECT company_name, avg(paid_time_off_days)
+FROM fortune_companies
+WHERE industry='Healthcare'
+;
